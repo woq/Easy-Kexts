@@ -15,18 +15,19 @@ def get_file(repo):
         filename = "Lilu-" + version + "-RELEASE.zip"
         if os.path.isfile("./Lilu/" + filename):
             print("Lilu is ok!!! The Version = " + version)
-            exit()
-        file = requests.get(githuburl + repo + version + fanxiegang + filename)
-        with open("./Lilu/"+filename, "wb") as code:
-            code.write(file.content)
-    if repo == "acidanthera/Lilu":
-        filename = "Lilu-" + version + "-RELEASE.zip"
-        if os.path.isfile("./Lilu/" + filename):
-            print("Lilu is ok!!! The Version = " + version)
-            exit()
-        file = requests.get(githuburl + repo + version + fanxiegang + filename)
-        with open("./Lilu/" + filename, "wb") as code:
-            code.write(file.content)
+        else:
+            file = requests.get(githuburl + repo + version + fanxiegang + filename)
+            with open("./Lilu/"+filename, "wb") as code:
+                code.write(file.content)
+    if repo == "acidanthera/OpenCorePkg":
+        filename = "OpenCore-" + version + "-RELEASE.zip"
+        if os.path.isfile("./OpenCore/" + filename):
+            print("OpenCore is ok!!! The Version = " + version)
+        else:
+            file = requests.get(githuburl + repo + version + fanxiegang + filename)
+            with open("./OpenCore/" + filename, "wb") as code:
+                code.write(file.content)
 
 
 get_file("acidanthera/Lilu")
+get_file("acidanthera/OpenCorePkg")
