@@ -7,31 +7,40 @@
     <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/bulma/0.9.0/css/bulma.min.css">
 </head>
 <body>
-<section class="section">
+<section class="section" name="Core">
     <div class="container">
-        <div class="columns">
-            <div class="column is-half">
-                First column
-            </div>
-            <div class="column is-half">
-                Second column
-                项目名：xxxxxxxxxxx
-                版本号：xxxxxx
-                更新说明：x.xx
-                下载
-            </div>
-
-
+        <div class="columns is-vcentered is-centered">
+            <table class="table is-bordered ">
+                <thead>
+                <tr>
+                    <th><abbr>类别</abbr></th>
+                    <th><abbr>项目名</abbr></th>
+                    <th><abbr>版本号</abbr></th>
+                    <th><abbr>更新时间</abbr></th>
+                    <th><abbr>项目说明</abbr></th>
+                    <th><abbr>下载连接</abbr></th>
+                </tr>
+                </thead>
+                <tfoot>
+                <tr>
+                    <th><span class="tag is-primary is-light">Core</span></th>
+                    <th><a href="https://github.com/acidanthera/Lilu" target="_blank"><span class="tag is-primary">acidanthera/Lilu</span></a></th>
+                    <th><span class="tag is-info">1.4.5</span></th>
+                    <th><span class="tag is-success">2020-07-16</span></th>
+                    <th><span class="tag is-warning is-light">说明</span></th>
+                    <th><a href="" target="_blank"><span class="tag is-link">Primary</span></a></th>
+                </tr>
+                <tr>
+                    <th><span class="tag is-primary is-light">Core</span></th>
+                    <th><a href="https://github.com/acidanthera/Lilu" target="_blank"><span class="tag is-primary">acidanthera/Lilu</span></a></th>
+                    <th><span class="tag is-info">1.4.5</span></th>
+                    <th><span class="tag is-success">published_at_2020-07-16 browser_download_url</span></th>
+                    <th><span class="tag is-warning is-light">说明</span></th>
+                    <th><a href="" target="_blank"><span class="tag is-link">Primary</span></a></th>
+                </tr>
+                </tfoot>
+            </table>
         </div>
-        <a class="button">下载</a>
-        <div class="column">
-            Third column
-        </div>
-        <div class="column">
-            Fourth column
-        </div>
-        <h5>dd</h5>
-            <?php ?>
     </div>
 </section>
 </body>
