@@ -44,32 +44,33 @@ suojin = "                "
 bigsuojin = "                   "
 
 
-def get_file(repo, sort):
+def get_file(sort, owner_repo, path="",):
     # GET /repos/:owner/:repo/releases/tags/:tag
-    url = "https://api.github.com/repos/" + repo + "/releases/latest"
+    url = "https://api.github.com/repos/" + owner_repo + "/releases/latest"
+
     # 转换成JSON
     json = requests.get(url).json()
     # 获取Filename
     filename = json["assets"][0]['name']
     # 判断文件是否存在，避免重复下载
     if os.path.isfile(filename):
-        print("文件已存在" + repo + "\r" + json["tag_name"])
+        print("文件已存在" + owner_repo + "\r" + json["tag_name"])
     else:
         file = requests.get(json["assets"][0]['browser_download_url'])
         with open(filename, "wb") as code:
             code.write(file.content)
 
-        print("下载完毕" + repo + "\r" + json["tag_name"])
+        print("下载完毕" + owner_repo + "\r" + json["tag_name"])
 
-    return str((suojin + "<tr>") + ('<th><span class="tag is-primary is-light">'+sort +'</span></th>') + ('<th><a href="https://github.com/'+repo+'" target="_blank"><span class="tag is-primary">'+ repo+'</span></a></th>') +('<th><span class="tag is-info">'+ json["tag_name"]+'</span></th>')+('<th><span class="tag is-success">'+json["published_at"]+'</span></th>')+('<th><span class="tag is-warning is-light">'+json["html_url"] +'</span></th>')+('<th><a href="https://gitee.com/evu/Easy-Kexts/raw/master/'+ filename +'" target="_blank"><span class="tag is-link">下载</span></a></th>')+ ("\n" + suojin + "</tr>"))
+    return str((suojin + "<tr>") + ('<th><span class="tag is-primary is-light">'+sort +'</span></th>') + ('<th><a href="https://github.com/'+owner_repo+'" target="_blank"><span class="tag is-primary">'+ owner_repo+'</span></a></th>') +('<th><span class="tag is-info">'+ json["tag_name"]+'</span></th>')+('<th><span class="tag is-success">'+json["published_at"]+'</span></th>')+('<th><span class="tag is-warning is-light">'+'<div class="dropdown is-hoverable"><div class="dropdown-trigger"><button class="button"aria-haspopup="true"aria-controls="dropdown-menu4"><span>鼠标移动到此查看详情</span><span class="icon is-small"><i class="fas fa-angle-down"aria-hidden="true"></i></span></button></div><div class="dropdown-menu"id="dropdown-menu4"role="menu"><div class="dropdown-content"><div class="dropdown-item"><p>'+json["body"]+'</p></div></div></div></div>'+'</span></th>')+('<th><a href="https://gitee.com/evu/Easy-Kexts/raw/master/'+ filename +'" target="_blank"><span class="tag is-link">下载</span></a></th>')+ ("\n" + suojin + "</tr>"))
 
 
-head = head + get_file("acidanthera/Lilu", "CORE")
-head = head + get_file("acidanthera/OpenCorePkg", "CORE")
-head = head + get_file("acidanthera/VirtualSMC", "CORE")
-head = head + get_file("acidanthera/AppleALC", "AUDIO")
-head = head + get_file("acidanthera/WhateverGreen", "GPU")
-head = head + get_file("acidanthera/VoodooPS2", "Trackpad")
+head = head + get_file("CORE","acidanthera/Lilu")
+head = head + get_file("CORE","acidanthera/OpenCorePkg")
+head = head + get_file("CORE","acidanthera/VirtualSMC")
+head = head + get_file("AUDIO","acidanthera/AppleALC")
+head = head + get_file("GPU","acidanthera/WhateverGreen")
+head = head + get_file("Trackpad","acidanthera/VoodooPS2")
 
 with open("index.html", "w") as f:
     f.write(head+foot)
