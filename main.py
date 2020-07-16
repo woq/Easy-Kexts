@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 import requests
 import os
-import time
+from git import Repo
 
-global head
+
 head = """
 <!DOCTYPE html>
 <html>
@@ -61,12 +61,24 @@ def get_file(repo, sort):
 
         print("下载完毕" + repo + "\r" + json["tag_name"])
 
-    return str((suojin + "<tr>") + ('<th><span class="tag is-primary is-light">'+sort +'</span></th>') + ('<th><a href="https://github.com/'+repo+'" target="_blank"><span class="tag is-primary">'+ repo+'</span></a></th>') +('<th><span class="tag is-info">'+ json["tag_name"]+'</span></th>')+('<th><span class="tag is-success">'+json["published_at"]+'</span></th>')+('<th><span class="tag is-warning is-light">'+json["html_url"] +'</span></th>')+('<th><a href="./'+ filename +'" target="_blank"><span class="tag is-link">下载</span></a></th>')+ ("\n" + suojin + "</tr>"))
+    return str((suojin + "<tr>") + ('<th><span class="tag is-primary is-light">'+sort +'</span></th>') + ('<th><a href="https://github.com/'+repo+'" target="_blank"><span class="tag is-primary">'+ repo+'</span></a></th>') +('<th><span class="tag is-info">'+ json["tag_name"]+'</span></th>')+('<th><span class="tag is-success">'+json["published_at"]+'</span></th>')+('<th><span class="tag is-warning is-light">'+json["html_url"] +'</span></th>')+('<th><a href="https://gitee.com/evu/Easy-Kexts/raw/master/'+ filename +'" target="_blank"><span class="tag is-link">下载</span></a></th>')+ ("\n" + suojin + "</tr>"))
 
 
 head = head + get_file("acidanthera/Lilu", "CORE")
 head = head + get_file("acidanthera/OpenCorePkg", "CORE")
-
+head = head + get_file("acidanthera/VirtualSMC", "CORE")
+head = head + get_file("acidanthera/AppleALC", "AUDIO")
+head = head + get_file("acidanthera/WhateverGreen", "GPU")
+head = head + get_file("acidanthera/VoodooPS2", "Trackpad")
 
 with open("index.html", "w") as f:
     f.write(head+foot)
+
+dirfile = os.path.abspath('') # code的文件位置，我默认将其存放在根目录下
+repo = Repo(dirfile)
+
+g = repo.git
+g.add("--all")
+g.commit("-m auto update")
+g.push()
+print("Successful push!")
