@@ -65,13 +65,8 @@ def get_file(sort, owner_repo):
     return str(("<tr>") + ('<th><span class="tag is-primary is-light">'+sort +'</span></th>') + ('<th><a href="https://github.com/'+owner_repo+'" target="_blank"><span class="tag is-primary">'+ owner_repo+'</span></a></th>') +('<th><span class="tag is-info">'+ json[0]["tag_name"]+'</span></th>')+('<th><span class="tag is-success">'+json[0]["published_at"]+'</span></th>')+('<th><span class="tag is-warning is-light">'+'<div class="dropdown is-hoverable"><div class="dropdown-trigger"><button class="button"aria-haspopup="true"aria-controls="dropdown-menu4"><span>鼠标移动到此查看详情</span><span class="icon is-small"><i class="fas fa-angle-down"aria-hidden="true"></i></span></button></div><div class="dropdown-menu"id="dropdown-menu4"role="menu"><div class="dropdown-content"><div class="dropdown-item"><p>'+json[0]["html_url"]+'</p></div></div></div></div>'+'</span></th>')+('<th><a href="https://gitee.com/evu/Easy-Kexts/raw/master/'+ filename +'" target="_blank"><span class="tag is-link">下载</span></a></th>')+ ("\n" + suojin + "</tr>"))
 
 
-head = head + get_file("CORE-3rd","williambj1/OpenCore-Factory")
-head = head + get_file("CORE","acidanthera/Lilu")
-head = head + get_file("CORE","acidanthera/OpenCorePkg")
-head = head + get_file("CORE","acidanthera/VirtualSMC")
-head = head + get_file("AUDIO","acidanthera/AppleALC")
-head = head + get_file("GPU","acidanthera/WhateverGreen")
-head = head + get_file("Trackpad","acidanthera/VoodooPS2")
+head = head + get_file("CORE-SELF", "woq/AppleALC")
+
 
 with open("index.html", "w") as f:
     f.write(head+foot)
