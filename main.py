@@ -22,8 +22,8 @@ head = """
                 <tr>
                     <th><abbr>类别</abbr></th>
                     <th><abbr>项目名</abbr></th>
-                    <th><abbr>提交时间</abbr></th>
-                    <th><abbr>编译时间</abbr></th>
+                    <th><abbr>源提交时间</abbr></th>
+                    <th><abbr>现编译时间</abbr></th>
                     <!--<th><abbr>更新说明</abbr></th>--> 
                     <th><abbr>下载连接</abbr></th>
                 </tr>
@@ -63,14 +63,21 @@ def get_file(owner_repo,sort="自动编译"):
                + ('<th><a href="https://gitee.com/evu/Easy-Kexts/raw/master/' + filename + '" target="_blank"><span class="tag is-link">下载</span></a></th>') + (newline + align + "</tr>"))
 
 
+head = head + get_file("woq/Lilu")
 head = head + get_file("woq/AppleALC")
+head = head + get_file("woq/VirtualSMC")
+head = head + get_file("woq/OpenCorePkg")
+head = head + get_file("woq/AirportBrcmFixup")
 
 
 with open("index.html", "w") as f:
     f.write(head+foot)
 
+# 自动部署
+
 dirfile = os.path.abspath('')
 repo = Repo(dirfile)
+
 
 g = repo.git
 g.add("--all")
