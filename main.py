@@ -22,9 +22,9 @@ head = """
                 <tr>
                     <th><abbr>类别</abbr></th>
                     <th><abbr>项目名</abbr></th>
-                    <th><abbr>版本号</abbr></th>
-                    <th><abbr>更新时间</abbr></th>
-                    <th><abbr>更新说明</abbr></th>
+                    <th><abbr>提交时间</abbr></th>
+                    <th><abbr>编译时间</abbr></th>
+                    <!--<th><abbr>更新说明</abbr></th>--> 
                     <th><abbr>下载连接</abbr></th>
                 </tr>
                 </thead>
@@ -40,38 +40,36 @@ foot = """
 </body>
 </html>
 """
-suojin = "                "
-bigsuojin = "                   "
+newline = "\n"
+align = "                "
 
-
-def get_file(sort, owner_repo):
-    # GET /repos/:owner/:repo/releases/tags/:tag
+def get_file(owner_repo,sort="自动编译"):
+    # GET /repos/:owner/:repo/releases/ api参考 https://developer.github.com/v3/repos/releases/
     url = "https://api.github.com/repos/" + owner_repo + "/releases"
-
     # 转换成JSON
     json = requests.get(url).json()
     # 获取Filename
     filename = json[0]["assets"][0]['name']
-    # 判断文件是否存在，避免重复下载
-    if os.path.isfile(filename):
-        print("文件已存在" + owner_repo + "\r" + json[0]["tag_name"])
-    else:
-        file = requests.get(json[0]["assets"][0]['browser_download_url'])
-        with open(filename, "wb") as code:
-            code.write(file.content)
+    # 下载,即使文件覆盖依旧覆盖文件
+    file = requests.get(json[0]["assets"][0]['browser_download_url'])
+    with open(filename, "wb") as code:
+        code.write(file.content)
+    print(owner_repo + " Download finished current version is " + json[0]["tag_name"])
 
-        print("下载完毕" + owner_repo + "\r" + json[0]["tag_name"])
+    return str(align + "<tr>" + ('<th><span class="tag is-primary is-light">'+sort + '</span></th>') + newline + align\
+               + ('<th><a href="https://github.com/'+owner_repo+'" target="_blank"><span class="tag is-primary">' + owner_repo +'</span></a></th>') + newline + align\
+               + ('<th><span class="tag is-info">'+ json[0]["tag_name"]+'</span></th>') + newline + align\
+               + ('<th><span class="tag is-success">'+json[0]["published_at"]+'</span></th>') + newline + align\
+               + ('<th><a href="https://gitee.com/evu/Easy-Kexts/raw/master/' + filename + '" target="_blank"><span class="tag is-link">下载</span></a></th>') + (newline + align + "</tr>"))
 
-    return str(("<tr>") + ('<th><span class="tag is-primary is-light">'+sort +'</span></th>') + ('<th><a href="https://github.com/'+owner_repo+'" target="_blank"><span class="tag is-primary">'+ owner_repo+'</span></a></th>') +('<th><span class="tag is-info">'+ json[0]["tag_name"]+'</span></th>')+('<th><span class="tag is-success">'+json[0]["published_at"]+'</span></th>')+('<th><span class="tag is-warning is-light">'+'<div class="dropdown is-hoverable"><div class="dropdown-trigger"><button class="button"aria-haspopup="true"aria-controls="dropdown-menu4"><span>鼠标移动到此查看详情</span><span class="icon is-small"><i class="fas fa-angle-down"aria-hidden="true"></i></span></button></div><div class="dropdown-menu"id="dropdown-menu4"role="menu"><div class="dropdown-content"><div class="dropdown-item"><p>'+json[0]["html_url"]+'</p></div></div></div></div>'+'</span></th>')+('<th><a href="https://gitee.com/evu/Easy-Kexts/raw/master/'+ filename +'" target="_blank"><span class="tag is-link">下载</span></a></th>')+ ("\n" + suojin + "</tr>"))
 
-
-head = head + get_file("CORE-SELF", "woq/AppleALC")
+head = head + get_file("woq/AppleALC")
 
 
 with open("index.html", "w") as f:
     f.write(head+foot)
 
-dirfile = os.path.abspath('') # code的文件位置，我默认将其存放在根目录下
+dirfile = os.path.abspath('')
 repo = Repo(dirfile)
 
 g = repo.git
