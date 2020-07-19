@@ -12,6 +12,7 @@ head = """
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Easy-Kexts</title>
     <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/bulma/0.9.0/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.14.0/css/all.min.css">
 </head>
 <body>
 <nav class="breadcrumb is-centered" aria-label="breadcrumbs">
