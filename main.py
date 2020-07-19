@@ -29,9 +29,11 @@ head = """
                 </tr>
                 </thead>
                 <tfoot>
+                <tr>
 """
 
 foot = """
+                </tr>
                 </tfoot>
             </table>
         </div>
@@ -48,19 +50,23 @@ def get_file(owner_repo,sort="自动编译"):
     url = "https://api.github.com/repos/" + owner_repo + "/releases"
     # 转换成JSON
     json = requests.get(url).json()
-    # 获取Filename
-    filename = json[0]["assets"][0]['name']
-    # 下载,即使文件覆盖依旧覆盖文件
-    file = requests.get(json[0]["assets"][0]['browser_download_url'])
-    with open(filename, "wb") as code:
-        code.write(file.content)
-    print(owner_repo + " Download finished current version is " + json[0]["tag_name"])
+    # 获取Filename 下载多个文件并准备HTML
+    assets = len(json[0]["assets"])
+    if assets > 1:
+        while assets >= 1:
+            assets = assets - 1
+            filename = json[0]["assets"][assets]['name']
+            file = requests.get(json[0]["assets"][assets]['browser_download_url'])
+            with open(filename, "wb") as code:
+                code.write(file.content)
+            print("Download Finished File Name is   " + filename)
+            downloadlink = ""
+            downloadlink = downloadlink + '<th><a href="https://gitee.com/evu/Easy-Kexts/raw/master/' + filename + 'target="_blank"><span class="tag is-link">' + filename + '</span></a></th>' + (newline + align)
 
-    return str(align + "<tr>" + ('<th><span class="tag is-primary is-light">'+sort + '</span></th>') + newline + align\
+    return str(align + ('<th><span class="tag is-primary is-light">'+sort + '</span></th>') + newline + align\
                + ('<th><a href="https://github.com/'+owner_repo+'" target="_blank"><span class="tag is-primary">' + owner_repo +'</span></a></th>') + newline + align\
                + ('<th><span class="tag is-info">'+ json[0]["tag_name"]+'</span></th>') + newline + align\
-               + ('<th><span class="tag is-success">'+json[0]["published_at"]+'</span></th>') + newline + align\
-               + ('<th><a href="https://gitee.com/evu/Easy-Kexts/raw/master/' + filename + '" target="_blank"><span class="tag is-link">下载</span></a></th>') + (newline + align + "</tr>"))
+               + ('<th><span class="tag is-success">'+json[0]["published_at"]+'</span></th>') + newline + align + downloadlink)
 
 
 head = head + get_file("woq/Lilu")
