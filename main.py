@@ -20,12 +20,12 @@ head = """
             <table class="table is-bordered ">
                 <thead>
                 <tr>
-                    <th><abbr>类别</abbr></th>
-                    <th><abbr>项目名</abbr></th>
-                    <th><abbr>源提交时间</abbr></th>
-                    <th><abbr>现编译时间</abbr></th>
+                    <th><abbr>项目类型</abbr></th>
+                    <th><abbr>项目名称</abbr></th>
+                    <th><abbr>提交编译时间</abbr></th>
+                    <th><abbr>编译完成时间</abbr></th>
                     <!--<th><abbr>更新说明</abbr></th>--> 
-                    <th><abbr>下载连接</abbr></th>
+                    <th><abbr>下载地址</abbr></th>
                 </tr>
                 </thead>
                 <tfoot>
@@ -67,7 +67,9 @@ head = head + get_file("woq/Lilu")
 head = head + get_file("woq/AppleALC")
 head = head + get_file("woq/VirtualSMC")
 head = head + get_file("woq/OpenCorePkg")
+head = head + get_file("woq/VoodooInput")
 head = head + get_file("woq/AirportBrcmFixup")
+
 
 
 with open("index.html", "w") as f:
