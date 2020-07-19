@@ -14,9 +14,53 @@ head = """
     <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/bulma/0.9.0/css/bulma.min.css">
 </head>
 <body>
+<nav class="breadcrumb is-centered" aria-label="breadcrumbs">
+  <ul>
+    <li>
+      <a href="http://bbs.pcbeta.com/">
+        <span class="icon is-medium">
+          <i class="fas fa-apple-alt" aria-hidden="true"></i>
+        </span>
+        <span>远景</span>
+      </a>
+    </li>
+    <li>
+      <a href="http://bbs.pcbeta.com/forum.php?gid=86" target="_blank">
+        <span class="icon is-medium">
+          <i class="fas fa-book" aria-hidden="true"></i>
+        </span>
+        <span>文档</span>
+      </a>
+    </li>
+    <li>
+      <a href="https://gitee.com/" target="_blank">
+        <span class="icon is-medium">
+          <i class="fab fa-gratipay" aria-hidden="true"></i>
+        </span>
+        <span>码云</span>
+      </a>
+    </li>
+    <li>
+      <a href="https://evu.gitee.io/easy-kexts/" target="_blank">
+        <span class="icon is-medium">
+          <i class="far fa-lightbulb" aria-hidden="true"></i>
+        </span>
+        <span>预览</span>
+      </a>
+    </li>
+    <li>
+      <a href="https://evu.gitee.io/easy-kexts-stable/" target="_blank">
+        <span class="icon is-medium">
+          <i class="fas fa-lightbulb" aria-hidden="true"></i>
+        </span>
+        <span>稳定</span>
+      </a>
+    </li>
+  </ul>
+</nav>
 <section class="section" name="Core">
     <div class="container">
-        <div class="columns is-vcentered is-centered">
+        <div class="columns is-vcentered is-centered is-striped is-hoverable">
             <table class="table is-bordered ">
                 <thead>
                 <tr>
@@ -43,7 +87,7 @@ foot = """
 newline = "\n"
 align = "                "
 
-def get_file(owner_repo,sort="自动编译"):
+def get_file(owner_repo,sort="预览"):
     # GET /repos/:owner/:repo/releases/ api参考 https://developer.github.com/v3/repos/releases/
     url = "https://api.github.com/repos/" + owner_repo + "/releases"
     # 转换成JSON
@@ -63,7 +107,7 @@ def get_file(owner_repo,sort="自动编译"):
 
     return str(align + ('<tr><th><span class="tag is-primary is-light">'+sort + '</span></th>') + newline + align\
                + ('<th><a href="https://github.com/'+owner_repo+'" target="_blank"><span class="tag is-primary">' + owner_repo +'</span></a></th>') + newline + align\
-               + ('<th><span class="tag is-info">'+ json[0]["tag_name"]+'</span></th>') + newline + align\
+               + ('<th><span class="tag is-success is-light">' + json[0]["tag_name"]+'</span></th>') + newline + align\
                + ('<th><span class="tag is-success">'+json[0]["published_at"]+'</span></th>') + newline + align + downloadlink + "</th>" + (newline + align) + "</tr>")
 
 
