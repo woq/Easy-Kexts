@@ -51,6 +51,7 @@ def get_file(owner_repo,sort="自动编译"):
     # 转换成JSON
     json = requests.get(url).json()
     # 获取Filename 下载多个文件并准备HTML
+    downloadlink = ""
     assets = len(json[0]["assets"])
     if assets > 1:
         while assets >= 1:
@@ -60,8 +61,7 @@ def get_file(owner_repo,sort="自动编译"):
             with open(filename, "wb") as code:
                 code.write(file.content)
             print("Download Finished File Name is   " + filename)
-            downloadlink = ""
-            downloadlink = downloadlink + '<th><a href="https://gitee.com/evu/Easy-Kexts/raw/master/' + filename + 'target="_blank"><span class="tag is-link">' + filename + '</span></a></th>' + (newline + align)
+            downloadlink = downloadlink + '<th><a href="https://gitee.com/evu/Easy-Kexts/raw/master/' + filename + '"target="_blank"><span class="tag is-link">' + filename + '</span></a></th>' + (newline + align)
 
     return str(align + ('<th><span class="tag is-primary is-light">'+sort + '</span></th>') + newline + align\
                + ('<th><a href="https://github.com/'+owner_repo+'" target="_blank"><span class="tag is-primary">' + owner_repo +'</span></a></th>') + newline + align\
