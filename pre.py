@@ -88,6 +88,7 @@ foot = """
 newline = "\n"
 align = "                "
 
+
 def get_file(owner_repo,sort="预览"):
     # GET /repos/:owner/:repo/releases/ api参考 https://developer.github.com/v3/repos/releases/
     url = "https://api.github.com/repos/" + owner_repo + "/releases"
@@ -118,9 +119,11 @@ head = head + get_file("woq/VirtualSMC")
 head = head + get_file("woq/OpenCorePkg")
 head = head + get_file("woq/VoodooInput")
 head = head + get_file("woq/AirportBrcmFixup")
-
-
-
+jsonx = requests.get("https://raw.githubusercontent.com/woq/Hackintosh-Resources/master/pre.json").json()
+x = len(jsonx["list"])
+while x >= 1:
+    head = head + get_file(jsonx["list"][x]["repo"])
+    x = x-1
 with open("index.html", "w") as f:
     f.write(head+foot)
 
