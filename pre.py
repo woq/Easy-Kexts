@@ -97,14 +97,14 @@ def get_file(owner_repo,sort="预览"):
     # 获取Filename 下载多个文件并准备HTML
     downloadlink = "<th>"
     assets = len(json[0]["assets"])
-    if assets > 1:
+    if assets >= 1:
         while assets >= 1:
             assets = assets - 1
             filename = json[0]["assets"][assets]['name']
             file = requests.get(json[0]["assets"][assets]['browser_download_url'])
             with open(filename, "wb") as code:
                 code.write(file.content)
-            print("Download Finished File Name is   " + filename)
+            print("Download Finished! The file name is   " + filename)
             downloadlink = downloadlink + '<a href="https://gitee.com/evu/Easy-Kexts/raw/master/' + filename + '"target="_blank"><span class="tag is-link">' + filename + '</span></a>'
 
     return str(align + ('<tr><th><span class="tag is-primary is-light">'+sort + '</span></th>') + newline + align\
@@ -112,18 +112,14 @@ def get_file(owner_repo,sort="预览"):
                + ('<th><span class="tag is-success is-light">' + json[0]["tag_name"]+'</span></th>') + newline + align\
                + ('<th><span class="tag is-success">'+json[0]["published_at"]+'</span></th>') + newline + align + downloadlink + "</th>" + (newline + align) + "</tr>")
 
+# 获取json,用json的长度来确定循环次数,遍历完所有项目列表后写index.html
 
-head = head + get_file("woq/Lilu")
-head = head + get_file("woq/AppleALC")
-head = head + get_file("woq/VirtualSMC")
-head = head + get_file("woq/OpenCorePkg")
-head = head + get_file("woq/VoodooInput")
-head = head + get_file("woq/AirportBrcmFixup")
+
 jsonx = requests.get("https://raw.githubusercontent.com/woq/Hackintosh-Resources/master/pre.json").json()
 x = len(jsonx["list"])
 while x >= 1:
-    head = head + get_file(jsonx["list"][x]["repo"])
     x = x-1
+    head = head + get_file(jsonx["list"][x]["repo"], jsonx["list"][x]["sort"])
 with open("index.html", "w") as f:
     f.write(head+foot)
 

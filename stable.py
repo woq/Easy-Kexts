@@ -88,7 +88,7 @@ foot = """
 newline = "\n"
 align = "                "
 
-def get_file(owner_repo,sort="稳定"):
+def get_file( owner_repo,sort = "稳定"):
     # GET /repos/:owner/:repo/releases/ api参考 https://developer.github.com/v3/repos/releases/
     url = "https://api.github.com/repos/" + owner_repo + "/releases"
     # 转换成JSON
@@ -96,34 +96,32 @@ def get_file(owner_repo,sort="稳定"):
     # 获取Filename 下载多个文件并准备HTML
     downloadlink = "<th>"
     assets = len(json[0]["assets"])
-    if assets > 1:
+    if assets >= 1:
         while assets >= 1:
             assets = assets - 1
             filename = json[0]["assets"][assets]['name']
-            file = requests.get(json[0]["assets"][assets]['browser_download_url'])
-            with open(filename, "wb") as code:
-                code.write(file.content)
-            print("Download Finished File Name is   " + filename)
-            downloadlink = downloadlink + '<a href="https://gitee.com/evu/Easy-Kexts/raw/master/' + filename + '"target="_blank"><span class="tag is-link">' + filename + '</span></a>'
-
+            if os.path.isfile(filename):
+                print("File exists ! The file name is   " + filename)
+            else:
+                file = requests.get(json[0]["assets"][assets]['browser_download_url'])
+                with open(filename, "wb") as code:
+                    code.write(file.content)
+                print("Download Finished File Name is   " + filename)
+            downloadlink = downloadlink + '<a href="https://gitee.com/evu/Easy-Kexts-Stable/raw/master/' + filename + '"target="_blank"><span class="tag is-link">' + filename + '</span></a>'
     return str(align + ('<tr><th><span class="tag is-primary is-light">'+sort + '</span></th>') + newline + align\
                + ('<th><a href="https://github.com/'+owner_repo+'" target="_blank"><span class="tag is-primary">' + owner_repo +'</span></a></th>') + newline + align\
                + ('<th><span class="tag is-success is-light">'+ json[0]["tag_name"]+'</span></th>') + newline + align\
                + ('<th><span class="tag is-success">'+json[0]["published_at"]+'</span></th>') + newline + align + downloadlink + "</th>" + (newline + align) + "</tr>")
 
 
-head = head + get_file("woq/Lilu")
-head = head + get_file("woq/AppleALC")
-head = head + get_file("woq/VirtualSMC")
-head = head + get_file("woq/OpenCorePkg")
-head = head + get_file("woq/VoodooInput")
-head = head + get_file("woq/AirportBrcmFixup")
-
-
+jsonx = requests.get("https://raw.githubusercontent.com/woq/Hackintosh-Resources/master/stable.json").json()
+x = len(jsonx["list"])
+while x >= 1:
+    x = x - 1
+    head = head + get_file(jsonx["list"][x]["repo"], jsonx["list"][x]["sort"])
 
 with open("index.html", "w") as f:
     f.write(head+foot)
-
 # 自动部署
 
 dirfile = os.path.abspath('')
