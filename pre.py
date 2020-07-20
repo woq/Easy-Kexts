@@ -44,7 +44,7 @@ head = """
     <li>
       <a href="https://evu.gitee.io/easy-kexts/" target="_blank">
         <span class="icon is-medium">
-          <i class="far fa-lightbulb" aria-hidden="true"></i>
+          <i class="fas fa-bolt" aria-hidden="true"></i>
         </span>
         <span>预览</span>
       </a>
