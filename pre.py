@@ -89,7 +89,7 @@ newline = "\n"
 align = "                "
 
 
-def get_file(owner_repo,sort="预览"):
+def get_file( owner_repo,sort = "稳定"):
     # GET /repos/:owner/:repo/releases/ api参考 https://developer.github.com/v3/repos/releases/
     url = "https://api.github.com/repos/" + owner_repo + "/releases"
     # 转换成JSON
@@ -97,15 +97,17 @@ def get_file(owner_repo,sort="预览"):
     # 获取Filename 下载多个文件并准备HTML
     downloadlink = "<th>"
     assets = len(json[0]["assets"])
-    if assets >= 1:
-        while assets >= 1:
-            assets = assets - 1
-            filename = json[0]["assets"][assets]['name']
+    while assets >= 1:
+        assets = assets - 1
+        filename = json[0]["assets"][assets]['name']
+        if os.path.isfile(filename):
+            print("File exists ! The file name is   " + filename)
+        else:
             file = requests.get(json[0]["assets"][assets]['browser_download_url'])
             with open(filename, "wb") as code:
                 code.write(file.content)
-            print("Download Finished! The file name is   " + filename)
-            downloadlink = downloadlink + '<a href="https://gitee.com/evu/Easy-Kexts/raw/master/' + filename + '"target="_blank"><span class="tag is-link">' + filename + '</span></a>'
+            print("Download Finished File Name is   " + filename)
+        downloadlink = downloadlink + '<a href="https://gitee.com/evu/Easy-Kexts/raw/master/' + filename + '"target="_blank"><span class="tag is-link">' + filename + '</span></a>'
 
     return str(align + ('<tr><th><span class="tag is-primary is-light">'+sort + '</span></th>') + newline + align\
                + ('<th><a href="https://github.com/'+owner_repo+'" target="_blank"><span class="tag is-primary">' + owner_repo +'</span></a></th>') + newline + align\
