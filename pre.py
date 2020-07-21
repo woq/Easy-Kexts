@@ -13,6 +13,7 @@ head = """
     <title>Easy-Kexts</title>
     <link rel="stylesheet" href="https://cdn.staticfile.org/bulma/0.9.0/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.14.0/css/all.min.css">
+    <style>*{font-family: Helvetica, Tahoma, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC","Microsoft YaHei", "WenQuanYiMicro Hei", sans-serif}</style>
 </head>
 <body>
 <nav class="breadcrumb is-centered" aria-label="breadcrumbs">
@@ -61,8 +62,8 @@ head = """
 </nav>
 <section class="section" name="Core">
     <div class="container">
-        <div class="columns is-vcentered is-centered is-striped is-hoverable">
-            <table class="table is-bordered ">
+        <div class="columns is-vcentered is-centered">
+            <table class="table is-bordered is-striped is-hoverable">
                 <thead>
                 <tr>
                     <th><abbr>项目类型</abbr></th>
