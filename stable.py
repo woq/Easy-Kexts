@@ -13,6 +13,7 @@ head = """
     <title>Easy-Kexts</title>
     <link rel="stylesheet" href="https://cdn.staticfile.org/bulma/0.9.0/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.14.0/css/all.min.css">
+    <style>*{font-family: Helvetica, Tahoma, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC","Microsoft YaHei", "WenQuanYiMicro Hei", sans-serif}</style>
 </head>
 <body>
 <nav class="breadcrumb is-centered" aria-label="breadcrumbs">
@@ -44,7 +45,7 @@ head = """
     <li>
       <a href="https://evu.gitee.io/easy-kexts/" target="_blank">
         <span class="icon is-medium">
-          <i class="far fa-lightbulb" aria-hidden="true"></i>
+          <i class="fas fa-bolt" aria-hidden="true"></i>
         </span>
         <span>预览</span>
       </a>
