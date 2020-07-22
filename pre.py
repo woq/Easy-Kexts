@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import requests
 import os
+import time
 from git import Repo
 
 
@@ -14,6 +15,17 @@ head = """
     <link rel="stylesheet" href="https://cdn.staticfile.org/bulma/0.9.0/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.14.0/css/all.min.css">
     <style>*{font-family: Helvetica, Tahoma, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC","Microsoft YaHei", "WenQuanYiMicro Hei", sans-serif}</style>
+        <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
+            $notification = $delete.parentNode;
+
+            $delete.addEventListener('click', () => {
+            $notification.parentNode.removeChild($notification);
+            });
+        });
+        });
+    </script>
 </head>
 <body>
 <nav class="breadcrumb is-centered" aria-label="breadcrumbs">
@@ -60,6 +72,15 @@ head = """
     </li>
   </ul>
 </nav>
+<div class="container has-text-centered">
+    <div class="notification is-success is-light">
+      <button class="delete"></button>
+      最后更新时间
+
+"""
+headplus = """
+    </div>
+</div>
 <section class="section" name="Core">
     <div class="container">
         <div class="columns is-vcentered is-centered">
@@ -76,7 +97,7 @@ head = """
                 </thead>
                 <tfoot>
 """
-
+head = head + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + headplus
 foot = """
                 </tfoot>
             </table>
