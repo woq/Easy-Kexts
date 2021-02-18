@@ -1,25 +1,22 @@
 # -*- coding: utf-8 -*-
-import requests
-import os
-import time
-from git import Repo
+
+import requests, os.path, time
+# from git import Repo
 
 
-head = """
-<!DOCTYPE html>
+head = """<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Easy-Kexts</title>
-    <link rel="stylesheet" href="https://cdn.staticfile.org/bulma/0.9.0/css/bulma.min.css">
-    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.14.0/css/all.min.css">
+    <link href="https://cdn.bootcdn.net/ajax/libs/bulma/0.9.1/css/bulma.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.15.2/css/all.min.css" rel="stylesheet">
     <style>*{font-family: Helvetica, Tahoma, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC","Microsoft YaHei", "WenQuanYiMicro Hei", sans-serif}</style>
     <script>
     document.addEventListener('DOMContentLoaded', () => {
         (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
             $notification = $delete.parentNode;
-
             $delete.addEventListener('click', () => {
             $notification.parentNode.removeChild($notification);
             });
@@ -39,7 +36,7 @@ head = """
       </a>
     </li>
     <li>
-      <a href="http://bbs.pcbeta.com/forum.php?gid=86" target="_blank">
+      <a href="https://dortania.github.io/OpenCore-Install-Guide/" target="_blank">
         <span class="icon is-medium">
           <i class="fas fa-book" aria-hidden="true"></i>
         </span>
@@ -59,15 +56,7 @@ head = """
         <span class="icon is-medium">
           <i class="fas fa-bolt" aria-hidden="true"></i>
         </span>
-        <span>预览</span>
-      </a>
-    </li>
-    <li>
-      <a href="https://evu.gitee.io/easy-kexts-stable/" target="_blank">
-        <span class="icon is-medium">
-          <i class="fas fa-lightbulb" aria-hidden="true"></i>
-        </span>
-        <span>稳定</span>
+        <span>主页</span>
       </a>
     </li>
   </ul>
@@ -75,8 +64,7 @@ head = """
 <div class="container has-text-centered">
     <div class="notification is-success is-light">
       <button class="delete"></button>
-      最后更新时间
-
+      本次更新时间
 """
 headplus = """
     </div>
@@ -87,11 +75,11 @@ headplus = """
             <table class="table is-bordered is-striped is-hoverable">
                 <thead>
                 <tr>
-                    <th><abbr>项目类型</abbr></th>
-                    <th><abbr>项目名</abbr></th>
-                    <th><abbr>版本号</abbr></th>
-                    <th><abbr>更新时间</abbr></th>
-                    <!--<th><abbr>更新说明</abbr></th>--> 
+                    <th><abbr>一级分类</abbr></th>
+                    <th><abbr>二级分类</abbr></th>
+                    <th><abbr>项目名称</abbr></th>
+                    <th><abbr>版本标签</abbr></th>
+                    <th><abbr>发布时间</abbr></th>
                     <th><abbr>下载地址</abbr></th>
                 </tr>
                 </thead>
@@ -110,11 +98,14 @@ foot = """
 newline = "\n"
 align = "                "
 
-def get_file( owner_repo,sort = "稳定"):
+
+def get_file( sort1, sort2, owner_repo):
     # GET /repos/:owner/:repo/releases/ api参考 https://developer.github.com/v3/repos/releases/
     url = "https://api.github.com/repos/" + owner_repo + "/releases"
+
     # 转换成JSON
     json = requests.get(url).json()
+
     # 获取Filename 下载多个文件并准备HTML
     downloadlink = "<th>"
     assets = len(json[0]["assets"])
@@ -122,29 +113,33 @@ def get_file( owner_repo,sort = "稳定"):
         assets = assets - 1
         filename = json[0]["assets"][assets]['name']
         if os.path.isfile(filename):
-            print("File exists ! The file name is   " + filename)
+            print("File exists File name is   " + filename)
         else:
             file = requests.get(json[0]["assets"][assets]['browser_download_url'])
             with open(filename, "wb") as code:
                 code.write(file.content)
             print("Download Finished File Name is   " + filename)
-        downloadlink = downloadlink + '<a href="https://gitee.com/evu/Easy-Kexts-Stable/raw/master/' + filename + '"target="_blank"><span class="tag is-link">' + filename + '</span></a>'
-    return str(align + ('<tr><th><span class="tag is-primary is-light">'+sort + '</span></th>') + newline + align\
+        downloadlink = downloadlink + '<a href="https://f002.backblazeb2.com/file/kexts-by-pcbeta-everyve/' + filename + '"target="_blank"><span class="tag is-link">' + filename + '</span></a>'
+    return str(align + ('<tr><th><span class="tag is-primary is-light">'+sort1 + '</span></th>') + newline + align\
+               + ('<th><span class="tag is-primary is-light">'+sort2 + '</span></th>') + newline + align\
                + ('<th><a href="https://github.com/'+owner_repo+'" target="_blank"><span class="tag is-primary">' + owner_repo +'</span></a></th>') + newline + align\
                + ('<th><span class="tag is-success is-light">'+ json[0]["tag_name"]+'</span></th>') + newline + align\
                + ('<th><span class="tag is-success">'+json[0]["published_at"]+'</span></th>') + newline + align + downloadlink + "</th>" + (newline + align) + "</tr>")
 
 
-jsonx = requests.get("https://raw.githubusercontent.com/woq/Hackintosh-Resources/master/stable.json").json()
+jsonx = requests.get("https://raw.githubusercontent.com/woq/Hackintosh-Resources/master/testx.json").json()
 x = len(jsonx["list"])
-while x >= 1:
-    x = x - 1
-    head = head + get_file(jsonx["list"][x]["repo"], jsonx["list"][x]["sort"])
+y = 0
+while y < x:
+    head = head + get_file(jsonx["list"][y]["sort1"], jsonx["list"][y]["sort2"], jsonx["list"][y]["repo"])
+    time.sleep(3)
+    y = y + 1
 
 with open("index.html", "w") as f:
     f.write(head+foot)
-# 自动部署
 
+
+'''
 dirfile = os.path.abspath('')
 repo = Repo(dirfile)
 
@@ -154,3 +149,4 @@ g.add("--all")
 g.commit("-m auto update")
 g.push()
 print("Successful push!")
+'''
