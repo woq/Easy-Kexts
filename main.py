@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
-
 import requests, os.path, time
-# from git import Repo
+from git import Repo
 
 
 head = """<!DOCTYPE html>
@@ -102,44 +101,45 @@ align = "                "
 def get_file( sort1, sort2, owner_repo):
     # GET /repos/:owner/:repo/releases/ api参考 https://developer.github.com/v3/repos/releases/
     url = "https://api.github.com/repos/" + owner_repo + "/releases"
-
-    # 转换成JSON
-    json = requests.get(url).json()
+    api = requests.get(url).json()
 
     # 获取Filename 下载多个文件并准备HTML
     downloadlink = "<th>"
-    assets = len(json[0]["assets"])
+    assets = len(api[0]["assets"])
     while assets >= 1:
         assets = assets - 1
-        filename = json[0]["assets"][assets]['name']
+        filename = api[0]["assets"][assets]['name']
         if os.path.isfile(filename):
-            print("File exists File name is   " + filename)
+            print("File exists File name is    " + filename)
         else:
-            file = requests.get(json[0]["assets"][assets]['browser_download_url'])
+            file = requests.get(api[0]["assets"][assets]['browser_download_url'])
             with open(filename, "wb") as code:
                 code.write(file.content)
-            print("Download Finished File Name is   " + filename)
+            print("Download Finished File Name is    " + filename)
         downloadlink = downloadlink + '<a href="https://f002.backblazeb2.com/file/kexts-by-pcbeta-everyve/' + filename + '"target="_blank"><span class="tag is-link">' + filename + '</span></a>'
-    return str(align + ('<tr><th><span class="tag is-primary is-light">'+sort1 + '</span></th>') + newline + align\
+    return str(newline + ('<tr><th><span class="tag is-primary is-light">'+sort1 + '</span></th>') + newline + align\
                + ('<th><span class="tag is-primary is-light">'+sort2 + '</span></th>') + newline + align\
                + ('<th><a href="https://github.com/'+owner_repo+'" target="_blank"><span class="tag is-primary">' + owner_repo +'</span></a></th>') + newline + align\
-               + ('<th><span class="tag is-success is-light">'+ json[0]["tag_name"]+'</span></th>') + newline + align\
-               + ('<th><span class="tag is-success">'+json[0]["published_at"]+'</span></th>') + newline + align + downloadlink + "</th>" + (newline + align) + "</tr>")
+               + ('<th><span class="tag is-success is-light">'+ api[0]["tag_name"]+'</span></th>') + newline + align\
+               + ('<th><span class="tag is-success">'+api[0]["published_at"]+'</span></th>') + newline + align + downloadlink + "</th>" + (newline + align) + "</tr>")
 
 
-jsonx = requests.get("https://raw.githubusercontent.com/woq/Hackintosh-Resources/master/testx.json").json()
-x = len(jsonx["list"])
+# 下载Github项目里最新的一个tag的所有附件 备注 如果附件数量为0 会出致命错误
+githubRepos = requests.get("https://raw.githubusercontent.com/woq/Easy-Kexts/master/main.json").json()
+x = len(githubRepos["list"])
 y = 0
 while y < x:
-    head = head + get_file(jsonx["list"][y]["sort1"], jsonx["list"][y]["sort2"], jsonx["list"][y]["repo"])
+    head = head + get_file(githubRepos["list"][y]["sort1"], githubRepos["list"][y]["sort2"], githubRepos["list"][y]["repo"])
     time.sleep(3)
     y = y + 1
 
+# 写出HTML文件
 with open("index.html", "w") as f:
     f.write(head+foot)
 
 
-'''
+# GitPython
+
 dirfile = os.path.abspath('')
 repo = Repo(dirfile)
 
@@ -149,4 +149,3 @@ g.add("--all")
 g.commit("-m auto update")
 g.push()
 print("Successful push!")
-'''
