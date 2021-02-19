@@ -136,6 +136,7 @@ while y < x:
     time.sleep(3)
     y = y + 1
 
+
 def manual(sort1,sort2,name,namelink,tag,date,way,link,filename):
     return str(align + ('<tr><th><span class="tag is-primary is-light">' + sort1 + '</span></th>') + newline + align \
                + ('<th><span class="tag is-primary is-light">' + sort2 + '</span></th>') + newline + align \
@@ -151,17 +152,15 @@ head = head+manual('Ethernet','Realtek','LucyRTL8125Ethernet','https://github.co
 head = head+manual('Ethernet','Atheros','AtherosE2200Ethernet','https://github.com/Mieze/AtherosE2200Ethernet','2.3.3','unknow','手动 + CDN','https://cdn.jsdelivr.net/gh/woq/Hackintosh-Resources/AtherosE2200Ethernet-V2.3.3.zip','AtherosE2200Ethernet-V2.3.3.zip')
 head = head+manual('CORE','EFI/OC/Drivers/','HfsPlus.efi','https://github.com/acidanthera/OcBinaryData/blob/master/Drivers/HfsPlus.efi','unknown','unknown','直连 + CDN','https://cdn.jsdelivr.net/gh/acidanthera/OcBinaryData/Drivers/HfsPlus.efi','HfsPlus.efi')
 
+
 # 写出HTML文件
 with open("index.html", "w") as f:
     f.write(head+foot)
 
 
 # GitPython
-
 dirfile = os.path.abspath('')
 repo = Repo(dirfile)
-
-
 g = repo.git
 g.add("--all")
 g.commit("-m auto update")
