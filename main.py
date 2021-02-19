@@ -51,7 +51,7 @@ head = """<!DOCTYPE html>
       </a>
     </li>
     <li>
-      <a href="https://evu.gitee.io/easy-kexts/" target="_blank">
+      <a href="https://evu.gitee.io/easy-kexts-stable/" target="_blank">
         <span class="icon is-medium">
           <i class="fas fa-bolt" aria-hidden="true"></i>
         </span>
@@ -77,8 +77,9 @@ headplus = """
                     <th><abbr>一级分类</abbr></th>
                     <th><abbr>二级分类</abbr></th>
                     <th><abbr>项目名称</abbr></th>
-                    <th><abbr>版本标签</abbr></th>
+                    <th><abbr>版本信息</abbr></th>
                     <th><abbr>发布时间</abbr></th>
+                    <th><abbr>下载方式</abbr></th>
                     <th><abbr>下载地址</abbr></th>
                 </tr>
                 </thead>
@@ -98,7 +99,7 @@ newline = "\n"
 align = "                "
 
 
-def get_file( sort1, sort2, owner_repo):
+def githubrepo( sort1, sort2, owner_repo):
     # GET /repos/:owner/:repo/releases/ api参考 https://developer.github.com/v3/repos/releases/
     url = "https://api.github.com/repos/" + owner_repo + "/releases"
     api = requests.get(url).json()
@@ -117,11 +118,13 @@ def get_file( sort1, sort2, owner_repo):
                 code.write(file.content)
             print("Download Finished File Name is    " + filename)
         downloading = downloading + '<a href="https://cdn.jsdelivr.net/gh/woq/Hackintosh-Resources/' + filename + '"target="_blank"><span class="tag is-link">' + filename + '</span></a>'
-    return str(newline + align + ('<tr><th><span class="tag is-primary is-light">'+sort1 + '</span></th>') + newline + align\
-               + ('<th><span class="tag is-primary is-light">'+sort2 + '</span></th>') + newline + align\
-               + ('<th><a href="https://github.com/'+owner_repo+'" target="_blank"><span class="tag is-primary">' + owner_repo +'</span></a></th>') + newline + align\
-               + ('<th><span class="tag is-success is-light">'+ api[0]["tag_name"]+'</span></th>') + newline + align\
-               + ('<th><span class="tag is-success">'+api[0]["published_at"]+'</span></th>') + newline + align + downloading + "</th>" + (newline + align) + "</tr>")
+    return str(align + ('<tr><th><span class="tag is-primary is-light">'+sort1 + '</span></th>') + newline + align \
+               + ('<th><span class="tag is-primary is-light">' + sort2 + '</span></th>') + newline + align \
+               + ('<th><a href="https://github.com/'+owner_repo+'" target="_blank"><span class="tag is-primary">' + owner_repo +'</span></a></th>') + newline + align \
+               + ('<th><span class="tag is-success is-light">'+ api[0]["tag_name"]+'</span></th>') + newline + align \
+               + ('<th><span class="tag is-success">'+api[0]["published_at"]+'</span></th>') + newline + align \
+               + '<th><span class="tag is-success">最新 release + CDN</span></th>' + newline + align \
+               + downloading + "</th>" + (newline + align) + "</tr>" + newline)
 
 
 # 下载Github项目里最新的一个tag的所有附件 备注 如果附件数量为0 会出致命错误
@@ -129,9 +132,23 @@ githubRepos = requests.get("https://raw.githubusercontent.com/woq/Easy-Kexts/mas
 x = len(githubRepos["list"])
 y = 0
 while y < x:
-    head = head + get_file(githubRepos["list"][y]["sort1"], githubRepos["list"][y]["sort2"], githubRepos["list"][y]["repo"])
+    head = head + githubrepo(githubRepos["list"][y]["sort1"], githubRepos["list"][y]["sort2"], githubRepos["list"][y]["repo"])
     time.sleep(3)
     y = y + 1
+
+def manual(sort1,sort2,name,namelink,tag,date,way,link,filename):
+    return str(align + ('<tr><th><span class="tag is-primary is-light">' + sort1 + '</span></th>') + newline + align \
+               + ('<th><span class="tag is-primary is-light">' + sort2 + '</span></th>') + newline + align \
+               + ('<th><a href="' + namelink + '" target="_blank"><span class="tag is-primary">' + name + '</span></a></th>') + newline + align \
+               + ('<th><span class="tag is-success is-light">' + tag + '</span></th>') + newline + align \
+               + ('<th><span class="tag is-success">' + date + '</span></th>') + newline + align \
+               + ('<th><span class="tag is-success">' + way + '</span></th>') + newline + align \
+               +  '<th><a href="' + link + '"target="_blank"><span class="tag is-link">' + filename + '</span></a></th>' + (newline + align) + "</tr>" + newline)
+# directlink sort1,sort2,name,version,date,downloadlink
+
+head = head+manual('Ethernet','Realtek','LucyRTL8125Ethernet','https://github.com/Mieze/LucyRTL8125Ethernet','1.0.0','unknow','手动 + CDN','https://cdn.jsdelivr.net/gh/woq/Hackintosh-Resources/LucyRTL8125Ethernet-V1.0.0.zip','LucyRTL8125Ethernet-V1.0.0.zip')
+head = head+manual('Ethernet','Atheros','AtherosE2200Ethernet','https://github.com/Mieze/AtherosE2200Ethernet','2.3.3','unknow','手动 + CDN','https://cdn.jsdelivr.net/gh/woq/Hackintosh-Resources/AtherosE2200Ethernet-V2.3.3.zip','AtherosE2200Ethernet-V2.3.3.zip')
+head = head+manual('CORE','EFI/OC/Drivers/','HfsPlus.efi','https://github.com/acidanthera/OcBinaryData/blob/master/Drivers/HfsPlus.efi','unknown','unknown','直连 + CDN','https://cdn.jsdelivr.net/gh/acidanthera/OcBinaryData/Drivers/HfsPlus.efi','HfsPlus.efi')
 
 # 写出HTML文件
 with open("index.html", "w") as f:
