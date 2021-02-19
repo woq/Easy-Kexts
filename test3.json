@@ -1,0 +1,32 @@
+{
+    "projects":[
+        {
+            "sort1":"CORE",
+            "sort2":"Required",
+            "projectName":"acidanthera/OpenCorePkg",
+            "projectNamelink":"acidanthera/OpenCorePkg",
+            "versionTag":"acidanthera/OpenCorePkg",
+            "releaseDate":"acidanthera/OpenCorePkg",
+            "updateWay":"acidanthera/OpenCorePkg",
+            "fileName":"acidanthera/OpenCorePkg"
+        },
+        {
+            "sort1":"COREx",
+            "sort2":"Required",
+            "projectName":"acidanthera/OpenCorePkg",
+            "projectNamelink":"acidanthera/OpenCorePkg",
+            "versionTag":"acidanthera/OpenCorePkg",
+            "releaseDate":"acidanthera/OpenCorePkg",
+            "updateWay":"acidanthera/OpenCorePkg",
+            "fileName":[
+              {
+                "fiilName" : 1
+              },
+              {
+                "fiilName" : 1
+              }
+              ]
+
+        }
+    ]
+}
