@@ -146,6 +146,7 @@ def manual(sort1,sort2,name,namelink,tag,date,way,link,filename):
                +  '<th><a href="' + link + '"target="_blank"><span class="tag is-link">' + filename + '</span></a></th>' + (newline + align) + "</tr>" + newline)
 # directlink sort1,sort2,name,version,date,downloadlink
 
+
 head = head+manual('Ethernet','Realtek','LucyRTL8125Ethernet','https://github.com/Mieze/LucyRTL8125Ethernet','1.0.0','unknow','手动 + CDN','https://cdn.jsdelivr.net/gh/woq/Hackintosh-Resources/LucyRTL8125Ethernet-V1.0.0.zip','LucyRTL8125Ethernet-V1.0.0.zip')
 head = head+manual('Ethernet','Atheros','AtherosE2200Ethernet','https://github.com/Mieze/AtherosE2200Ethernet','2.3.3','unknow','手动 + CDN','https://cdn.jsdelivr.net/gh/woq/Hackintosh-Resources/AtherosE2200Ethernet-V2.3.3.zip','AtherosE2200Ethernet-V2.3.3.zip')
 head = head+manual('CORE','EFI/OC/Drivers/','HfsPlus.efi','https://github.com/acidanthera/OcBinaryData/blob/master/Drivers/HfsPlus.efi','unknown','unknown','直连 + CDN','https://cdn.jsdelivr.net/gh/acidanthera/OcBinaryData/Drivers/HfsPlus.efi','HfsPlus.efi')
