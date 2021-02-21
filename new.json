@@ -100,8 +100,8 @@
         "files":""
      },
     {
-        "sort1":"Ethernet",
-        "sort2":"Ethernet",
+        "sort1":"WiFi and Bluetooth",
+        "sort2":"Intel",
         "projectName":"OpenIntelWireless/itlwm",
         "projectLink":"",
         "versionTag":"none",
@@ -110,8 +110,8 @@
         "files":""
      },
     {
-        "sort1":"Ethernet",
-        "sort2":"Ethernet",
+        "sort1":"WiFi and Bluetooth",
+        "sort2":"Intel",
         "projectName":"OpenIntelWireless/IntelBluetoothFirmware",
         "projectLink":"",
         "versionTag":"none",
@@ -120,8 +120,8 @@
         "files":""
      },
     {
-        "sort1":"Ethernet",
-        "sort2":"Ethernet",
+        "sort1":"WiFi and Bluetooth",
+        "sort2":"Broadcom",
         "projectName":"acidanthera/AirportBrcmFixup",
         "projectLink":"",
         "versionTag":"none",
@@ -130,8 +130,8 @@
         "files":""
     },
     {
-        "sort1":"Ethernet",
-        "sort2":"Ethernet",
+        "sort1":"WiFi and Bluetooth",
+        "sort2":"Broadcom",
         "projectName":"acidanthera/BrcmPatchRAM",
         "projectLink":"",
         "versionTag":"none",
