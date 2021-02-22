@@ -15,6 +15,7 @@ for value in jsonData:
         api = requests.get(url).json()
         # 获取Filename 下载多个文件并准备HTML
         assets = len(api[0]["assets"])
+        jsonData[i]['files'] = ""
         while assets >= 1:
             assets = assets - 1
             filename = api[0]["assets"][assets]['name']
@@ -25,7 +26,7 @@ for value in jsonData:
                 with open(filename, "wb") as code:
                     code.write(file.content)
                 print("Download Finished File Name is    " + filename)
-            jsonData[i]['files'] = '<a href="https://cdn.jsdelivr.net/gh/woq/Hackintosh-Resources/' + filename \
+            jsonData[i]['files'] = jsonData[i]['files'] + '<a href="https://cdn.jsdelivr.net/gh/woq/Hackintosh-Resources/' + filename \
                                    + '"target="_blank"><span class="tag is-link">' + filename + '</span></a>'
             jsonData[i]['projectLink'] = api[0]['url']
             jsonData[i]['versionTag'] = api[0]['tag_name']
