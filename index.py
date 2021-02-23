@@ -17,6 +17,8 @@ with open('index.html', 'w', encoding='utf8') as output:
 # GitPython
 dirfile = os.path.abspath('')
 repo = Repo(dirfile)
+repo.config_writer().set_value("user", "name", "eveqvq@gmail.com").release()
+repo.config_writer().set_value("user", "email", "woq").release()
 g = repo.git
 g.add("--all")
 g.commit("-m auto update")
