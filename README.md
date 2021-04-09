@@ -1,2 +1,2 @@
 # Easy-Kexts
-a easy way for cn users.
+Python 3
